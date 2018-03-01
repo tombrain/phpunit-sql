@@ -1,12 +1,12 @@
 <?php
-namespace Cz\PHPUnit\SQL\Constraint;
+namespace Cz\PHPUnit\SQL;
 
 use PHPUnit\Framework\Constraint\IsEqual,
     PHPUnit\Framework\ExpectationFailedException,
     SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
- * EqualsSQLQueries
+ * EqualsSQLQueriesConstraint
  * 
  * Compares series of SQL queries (actual to expected) after parsing them to arrays
  * using the tokenize function in order to ignore whitespace differences.
@@ -14,7 +14,7 @@ use PHPUnit\Framework\Constraint\IsEqual,
  * @author   czukowski
  * @license  MIT License
  */
-class EqualsSQLQueries extends IsEqual
+class EqualsSQLQueriesConstraint extends IsEqual
 {
     /**
      * @var  array

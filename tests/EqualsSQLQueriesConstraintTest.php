@@ -1,15 +1,15 @@
 <?php
-namespace Cz\PHPUnit\SQL\Constraint;
+namespace Cz\PHPUnit\SQL;
 
 use Cz\PHPUnit\SQL\Testcase;
 
 /**
- * EqualsSQLQueriesTest
+ * EqualsSQLQueriesConstraintTest
  * 
  * @author   czukowski
  * @license  MIT License
  */
-class EqualsSQLQueriesTest extends Testcase
+class EqualsSQLQueriesConstraintTest extends Testcase
 {
     /**
      * @dataProvider  provideEvaluate
@@ -139,10 +139,10 @@ class EqualsSQLQueriesTest extends Testcase
 
     /**
      * @param   mixed  $value
-     * @return  EqualsSQLQueries
+     * @return  EqualsSQLQueriesConstraint
      */
     private function createObject($value)
     {
-        return new EqualsSQLQueries($value);
+        return new EqualsSQLQueriesConstraint($value);
     }
 }

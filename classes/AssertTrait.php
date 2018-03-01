@@ -1,8 +1,7 @@
 <?php
 namespace Cz\PHPUnit\SQL;
 
-use Cz\PHPUnit\SQL\Constraint\EqualsSQLQueries,
-    LogicException,
+use LogicException,
     PHPUnit\Framework\Constraint\Constraint,
     PHPUnit\Util\InvalidArgumentHelper;
 
@@ -42,7 +41,7 @@ trait AssertTrait
                 );
             }
         }
-        $constraint = new EqualsSQLQueries($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
+        $constraint = new EqualsSQLQueriesConstraint($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
         static::assertThat($actual, $constraint, $message);
     }
 
