@@ -22,7 +22,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
     private $queries;
 
     /**
-     * @param   mixed    $other         string[] or string
+     * @param  mixed     $value         string[] or string
      * @param  float     $delta
      * @param  integer   $maxDepth
      * @param  boolean   $canonicalize
