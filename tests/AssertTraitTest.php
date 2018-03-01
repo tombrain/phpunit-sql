@@ -130,6 +130,25 @@ class AssertTraitTest extends Testcase
                 ['SELECT * FROM `t1`', 'DELETE * FROM `t2`'],
                 $this->createExpectationFailedException(),
             ],
+            [
+                [
+                    [
+                        ['SELECT * FROM `t1`'],
+                    ],
+                ],
+                'SELECT * FROM `t1`',
+                NULL,
+            ],
+            [
+                [
+                    [
+                        ['SELECT * FROM `t1`', 'DELETE * FROM `t2`'],
+                        ['SELECT COUNT(*) FROM `t2`'],
+                    ],
+                ],
+                ['SELECT * FROM `t1`', 'DELETE * FROM `t2`', ['SELECT COUNT(*) FROM `t2`']],
+                NULL,
+            ],
         ];
     }
 

@@ -33,16 +33,21 @@ trait AssertTrait
         $canonicalize = FALSE,
         $ignoreCase = FALSE
     ) {
-        foreach ([$expected, $actual] as $i => $argument) {
-            if ( ! is_string($argument) && ! is_array($argument)) {
-                throw InvalidArgumentHelper::factory(
-                    $i + 1,
-                    'string or array'
-                );
-            }
-        }
-        $constraint = new EqualsSQLQueriesConstraint($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
-        static::assertThat($actual, $constraint, $message);
+        $flatten = function (array $value) {
+            $flattened = [];
+            array_walk_recursive(
+                $value,
+                function ($a) use ( & $flattened) {
+                    $flattened[] = $a;
+                }
+            );
+            return $flattened;
+        };
+
+        $expectedArray = $flatten([$expected]);
+        $actualArray = $flatten([$actual]);
+        $constraint = new EqualsSQLQueriesConstraint($expectedArray, $delta, $maxDepth, $canonicalize, $ignoreCase);
+        static::assertThat($actualArray, $constraint, $message);
     }
 
     /**

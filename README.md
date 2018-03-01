@@ -17,7 +17,7 @@ acceptable and can be used to compare series of queries. For the purposes of the
 array with a single SQL query element is equal to the SQL query element itself, so there's
 no need to remember to eg. convert arguments to arrays all the time.
 
-1. `assertEqualsSQLQueries` method will verify equality of two queries or series of queries. 
+1. `assertEqualsSQLQueries` method will verify equality of two queries or series of queries.
    
    ```php
    $this->assertEqualsSQLQueries($expected, $actual);
@@ -40,10 +40,22 @@ no need to remember to eg. convert arguments to arrays all the time.
    lines inside the queries and in between of them, they do not get removed on load. By default,
    the method looks for the file in a subfolder named after the file name of the current class
    (presumably test case). That behavior can be changed by overriding `getLoadFilePath` method.
-
+   
    ```php
    $this->loadSQLQueries($expected);
    ```
+   
+   The assertion methods will flatten arrays of queries, so multiple files may be loaded without
+   a need to process them further.
+   
+   ```php
+   $this->assertExecutedSQLQueries([
+       $this->loadSQLQueries('SelectItems.sql'),
+       $this->loadSQLQueries('InsertNewItems.sql'),
+       $this->loadSQLQueries('DeleteOldItems.sql'),
+   ]);
+   ```
+
 
 Known issues
 ------------
