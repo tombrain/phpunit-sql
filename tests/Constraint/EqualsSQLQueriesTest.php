@@ -58,6 +58,11 @@ class EqualsSQLQueriesTest extends Testcase
                 ["DELETE * FROM `t1`", "SELECT * FROM `t2`"],
                 $this->createExpectationFailedException(),
             ],
+            'Fail, two queries in one string' => [
+                ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
+                ["SELECT * FROM `t1`; SELECT * FROM `t2`"],
+                $this->createExpectationFailedException(),
+            ],
             'Fail, reverse order' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
                 ["SELECT * FROM `t2`", "SELECT * FROM `t1`"],

@@ -81,6 +81,24 @@ trait AssertTrait
     }
 
     /**
+     * @param   string  $filename
+     * @return  array
+     */
+    protected function loadSQLQueries($filename)
+    {
+        return FileLoader::loadSQLFile($this->getLoadFilePath($filename));
+    }
+
+    /**
+     * @param   string  $filename
+     * @return  string
+     */
+    protected function getLoadFilePath($filename)
+    {
+        return FileLoader::getFilePathFromObjectSubdirectory($this, $filename);
+    }
+
+    /**
      * @param  mixed       $value
      * @param  Constraint  $constraint
      * @param  string      $message

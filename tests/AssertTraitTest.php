@@ -4,7 +4,8 @@ namespace Cz\PHPUnit\SQL;
 use LogicException,
     PHPUnit\Framework\Assert,
     PHPUnit\Framework\Constraint\Constraint,
-    PHPUnit\Framework\Exception;
+    PHPUnit\Framework\Exception,
+    ReflectionMethod;
 
 /**
  * AssertTraitTest
@@ -128,6 +129,28 @@ class AssertTraitTest extends Testcase
                 ],
                 ['SELECT * FROM `t1`', 'DELETE * FROM `t2`'],
                 $this->createExpectationFailedException(),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider  provideLoadSQLQueries
+     */
+    public function testLoadSQLQueries($filename, $expected)
+    {
+        $object = $this->createStubObject();
+        $loadSQLQueries = new ReflectionMethod($object, 'loadSQLQueries');
+        $loadSQLQueries->setAccessible(TRUE);
+        $actual = $loadSQLQueries->invoke($object, $filename);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function provideLoadSQLQueries()
+    {
+        return [
+            [
+                'Test.sql',
+                ["SELECT * FROM `t1`"],
             ],
         ];
     }

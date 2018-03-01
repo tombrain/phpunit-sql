@@ -34,6 +34,17 @@ no need to remember to eg. convert arguments to arrays all the time.
    $this->assertExecutedSQLQueries($expected);
    ```
 
+3. `loadSQLQueries` method will load SQL query or a series thereof from a file and return an
+   array of queries. Splitting of queries by a delimiter `;` works only if the next query after
+   a delimiter starts from the following line. Other than that, there may be newlines and blank
+   lines inside the queries and in between of them, they do not get removed on load. By default,
+   the method looks for the file in a subfolder named after the file name of the current class
+   (presumably test case). That behavior can be changed by overriding `getLoadFilePath` method.
+
+   ```php
+   $this->loadSQLQueries($expected);
+   ```
+
 Known issues
 ------------
 
