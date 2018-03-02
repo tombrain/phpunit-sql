@@ -7,6 +7,16 @@ queries) against well-formatted 'expected' queries stored in files.
 
 This does not replace the need to verify that the queries actually do the intended job.
 
+Installation
+------------
+
+Pick your version! Version numbering follows major PHPUnit version numbers, so for a given
+PHPUnit N.x, the installation command would look like this:
+
+```sh
+composer require --dev czukowski/phpunit-sql "~N.0"
+```
+
 Usage
 -----
 
