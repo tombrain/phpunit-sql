@@ -46,7 +46,7 @@ trait AssertTrait
         $expectedArray = $flatten([$expected]);
         $actualArray = $flatten([$actual]);
         $constraint = new EqualsSQLQueriesConstraint($expectedArray, $delta, $maxDepth, $canonicalize, $ignoreCase);
-        static::assertThat($actualArray, $constraint, $message);
+        $this->assertThat($actualArray, $constraint, $message);
     }
 
     /**
