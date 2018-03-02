@@ -2,8 +2,7 @@
 namespace Cz\PHPUnit\SQL;
 
 use LogicException,
-    PHPUnit\Framework\Constraint\Constraint,
-    PHPUnit\Util\InvalidArgumentHelper;
+    PHPUnit\Framework\Constraint\Constraint;
 
 /**
  * AssertTrait
