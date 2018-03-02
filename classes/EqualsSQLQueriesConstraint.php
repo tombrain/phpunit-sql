@@ -20,6 +20,10 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @var  array
      */
     private $queries;
+    /**
+     * @var mixed
+     */
+    private $value;
 
     /**
      * @param  mixed     $value         string[] or string
@@ -28,11 +32,16 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param  boolean   $canonicalize
      * @param  boolean   $ignoreCase
      */
-    public function __construct($value, $delta = 0.0, $maxDepth = 10, $canonicalize = FALSE, $ignoreCase = FALSE)
-    {
+    public function __construct(
+        $value,
+        float $delta = 0.0,
+        int $maxDepth = 10,
+        bool $canonicalize = FALSE,
+        bool $ignoreCase = FALSE
+    ) {
         $this->queries = $this->toArray($value);
-        $parsed = $this->parseQueries($this->queries);
-        parent::__construct($parsed, $delta, $maxDepth, $canonicalize, $ignoreCase);
+        $this->value = $this->parseQueries($this->queries);
+        parent::__construct($this->value, $delta, $maxDepth, $canonicalize, $ignoreCase);
     }
 
     /**
@@ -81,7 +90,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param   array  $queries
      * @return  array
      */
-    private function parseQueries(array $queries)
+    private function parseQueries(array $queries): array
     {
         $tokenized = [];
         foreach ($queries as $query) {
@@ -94,7 +103,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param   mixed  $value
      * @return  array
      */
-    private function toArray($value)
+    private function toArray($value): array
     {
         if ( ! is_array($value)) {
             $value = [$value];
@@ -111,7 +120,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param   string  $sql
      * @return  array
      */
-    private function tokenizeSQL($sql)
+    private function tokenizeSQL($sql): array
     {
         $token = '\\(|\\)|[\']|"|\140|<>|<=|>=|:=|[*\/<>,+=-]';
         $terminal = $token.'|;| |\\n';

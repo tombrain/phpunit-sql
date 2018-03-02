@@ -12,5 +12,5 @@ interface DatabaseDriverInterface
     /**
      * @return  array
      */
-    public function getExecutedQueries();
+    public function getExecutedQueries(): array;
 }

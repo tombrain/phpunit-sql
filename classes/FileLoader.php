@@ -23,7 +23,7 @@ class FileLoader
      * @param   string  $path
      * @return  array
      */
-    public static function loadSQLFile($path)
+    public static function loadSQLFile(string $path): array
     {
         $queries = [];
         $handle = @fopen($path, 'r');  // intentionally @
@@ -60,7 +60,7 @@ class FileLoader
      * @param   string  $filename
      * @return  string
      */
-    public static function getFilePathFromObjectSubdirectory($object, $filename)
+    public static function getFilePathFromObjectSubdirectory($object, string $filename): string
     {
         $class = new ReflectionClass($object);
         $path = $class->getFileName();

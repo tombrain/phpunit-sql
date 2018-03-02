@@ -136,7 +136,7 @@ class AssertTraitTest extends Testcase
                         ['SELECT * FROM `t1`'],
                     ],
                 ],
-                'SELECT * FROM `t1`',
+                ['SELECT * FROM `t1`'],
                 NULL,
             ],
             [

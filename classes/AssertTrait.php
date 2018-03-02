@@ -26,12 +26,13 @@ trait AssertTrait
     public function assertEqualsSQLQueries(
         $expected,
         $actual,
-        $message = '',
-        $delta = 0.0,
-        $maxDepth = 10,
-        $canonicalize = FALSE,
-        $ignoreCase = FALSE
-    ) {
+        string $message = '',
+        float $delta = 0.0,
+        int $maxDepth = 10,
+        bool $canonicalize = FALSE,
+        bool $ignoreCase = FALSE
+    ): void
+    {
         $flatten = function (array $value) {
             $flattened = [];
             array_walk_recursive(
@@ -62,12 +63,13 @@ trait AssertTrait
      */
     public function assertExecutedSQLQueries(
         $expected,
-        $message = '',
-        $delta = 0.0,
-        $maxDepth = 10,
-        $canonicalize = FALSE,
-        $ignoreCase = FALSE
-    ) {
+        string $message = '',
+        float $delta = 0.0,
+        int $maxDepth = 10,
+        bool $canonicalize = FALSE,
+        bool $ignoreCase = FALSE
+    ): void
+    {
         $actual = $this->getDatabaseDriver()
             ->getExecutedQueries();
         $this->assertEqualsSQLQueries($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
@@ -77,7 +79,7 @@ trait AssertTrait
      * @return  DatabaseDriverInterface
      * @throws  LogicException
      */
-    protected function getDatabaseDriver()
+    protected function getDatabaseDriver(): DatabaseDriverInterface
     {
         // Override this method to return a `DatabaseDriverInterface` instance.
         throw new LogicException('Missing implementation');
@@ -87,7 +89,7 @@ trait AssertTrait
      * @param   string  $filename
      * @return  array
      */
-    protected function loadSQLQueries($filename)
+    protected function loadSQLQueries(string $filename): array
     {
         return FileLoader::loadSQLFile($this->getLoadFilePath($filename));
     }
@@ -96,7 +98,7 @@ trait AssertTrait
      * @param   string  $filename
      * @return  string
      */
-    protected function getLoadFilePath($filename)
+    protected function getLoadFilePath(string $filename): string
     {
         return FileLoader::getFilePathFromObjectSubdirectory($this, $filename);
     }
@@ -106,5 +108,5 @@ trait AssertTrait
      * @param  Constraint  $constraint
      * @param  string      $message
      */
-    abstract public function assertThat($value, Constraint $constraint, $message = '');
+    abstract public function assertThat($value, Constraint $constraint, string $message = ''): void;
 }
