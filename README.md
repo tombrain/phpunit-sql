@@ -1,6 +1,8 @@
 SQL strings testing for PHPUnit
 ===============================
 
+[![Build Status](https://travis-ci.org/czukowski/phpunit-sql.svg?branch=phpunit-7)](https://travis-ci.org/czukowski/phpunit-sql)
+
 A constraint and assert method for testing SQL strings equality while ignoring whitespace.
 Can be useful for testing results of query builders (especially those for long and complex
 queries) against well-formatted 'expected' queries stored in files.
