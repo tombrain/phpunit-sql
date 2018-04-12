@@ -68,6 +68,8 @@ no need to remember to eg. convert arguments to arrays all the time.
    ]);
    ```
 
+**Does not match your specific needs?** No problem, the `AssertTrait` is extremely simple, you can
+clone and adjust it for your project or come up with a completely different implementation.
 
 Known issues
 ------------
