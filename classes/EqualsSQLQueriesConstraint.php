@@ -113,7 +113,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      */
     private function tokenizeSQL($sql)
     {
-        $token = '\\(|\\)|[\']|"|\140|<>|<=|>=|:=|[*\/<>,+=-]';
+        $token = '\\(|\\)|\[|\]|[\']|"|\140|<>|<=|>=|:=|[*\/<>,+=-]';
         $terminal = $token.'|;| |\\n';
         $result = [];
         $string = $sql;
