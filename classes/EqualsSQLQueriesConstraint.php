@@ -90,7 +90,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param   array  $queries
      * @return  array
      */
-    private function parseQueries(array $queries): array
+    protected function parseQueries(array $queries): array
     {
         $tokenized = [];
         foreach ($queries as $query) {
@@ -103,7 +103,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
      * @param   mixed  $value
      * @return  array
      */
-    private function toArray($value): array
+    protected function toArray($value): array
     {
         if ( ! is_array($value)) {
             $value = [$value];
