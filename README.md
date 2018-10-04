@@ -16,7 +16,7 @@ Pick your version! Version numbering follows major PHPUnit version numbers, so f
 PHPUnit N.x, the installation command would look like this:
 
 ```sh
-composer require --dev czukowski/phpunit-sql "~N.0"
+composer require czukowski/phpunit-sql "~N.0"
 ```
 
 Usage
