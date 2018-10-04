@@ -45,6 +45,9 @@ no need to remember to eg. convert arguments to arrays all the time.
    ```php
    $this->assertExecutedSQLQueries($expected);
    ```
+   
+   The interface implementation is available in `Cz\PHPUnit\SQL\DatabaseDriverTrait` for easy
+   inclusion into custom implementations.
 
 3. `loadSQLQueries` method will load SQL query or a series thereof from a file and return an
    array of queries. Splitting of queries by a delimiter `;` works only if the next query after
