@@ -15,7 +15,6 @@
         "issues": "https://github.com/czukowski/phpunit-sql/issues"
     },
     "require": {
-        "php": ">=7.1",
         "phpunit/phpunit": "~7.0"
     },
     "autoload": {
