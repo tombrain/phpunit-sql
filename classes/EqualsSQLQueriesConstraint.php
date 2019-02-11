@@ -1,8 +1,9 @@
 <?php
 namespace Cz\PHPUnit\SQL;
 
-use PHPUnit\Framework\Constraint\IsEqual,
+use PHPUnit\Framework\Constraint\Constraint,
     PHPUnit\Framework\ExpectationFailedException,
+    SebastianBergmann\Comparator\Factory as ComparatorFactory,
     SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
@@ -14,7 +15,7 @@ use PHPUnit\Framework\Constraint\IsEqual,
  * @author   czukowski
  * @license  MIT License
  */
-class EqualsSQLQueriesConstraint extends IsEqual
+class EqualsSQLQueriesConstraint extends Constraint
 {
     /**
      * @var  array
@@ -26,22 +27,12 @@ class EqualsSQLQueriesConstraint extends IsEqual
     private $value;
 
     /**
-     * @param  mixed     $value         string[] or string
-     * @param  float     $delta
-     * @param  integer   $maxDepth
-     * @param  boolean   $canonicalize
-     * @param  boolean   $ignoreCase
+     * @param  string[]|string  $value
      */
-    public function __construct(
-        $value,
-        float $delta = 0.0,
-        int $maxDepth = 10,
-        bool $canonicalize = FALSE,
-        bool $ignoreCase = FALSE
-    ) {
+    public function __construct($value)
+    {
         $this->queries = $this->toArray($value);
         $this->value = $this->parseQueries($this->queries);
-        parent::__construct($this->value, $delta, $maxDepth, $canonicalize, $ignoreCase);
     }
 
     /**
@@ -52,25 +43,37 @@ class EqualsSQLQueriesConstraint extends IsEqual
      */
     public function evaluate($other, $description = '', $returnResult = FALSE)
     {
-        $parsed = $this->parseQueries($this->toArray($other));
+        $otherParsed = $this->parseQueries($this->toArray($other));
+        $comparatorFactory = ComparatorFactory::getInstance();
+
         try {
-            return parent::evaluate($parsed, $description, $returnResult);
-        }
-        catch (ExpectationFailedException $e) {
-            $f = new ComparisonFailure(
+            $comparator = $comparatorFactory->getComparatorFor(
                 $this->value,
-                $parsed,
-                $this->export($this->value),
-                $this->export($parsed),
-                FALSE,
-                'Failed asserting that two SQL query sequences are equal (whitespace ignored).'
+                $otherParsed
             );
+
+            $comparator->assertEquals($this->value, $otherParsed);
+        } catch (ComparisonFailure $f) {
+            if ($returnResult) {
+                return FALSE;
+            }
+
+            $message = 'Failed asserting that two SQL query sequences are equal (whitespace ignored).';
             throw new ExpectationFailedException(
-                trim($description."\n".$f->getMessage()),
-                $f,
-                $e
+                trim($message."\n".$f->getMessage()),
+                new ComparisonFailure(
+                    $this->value,
+                    $otherParsed,
+                    $this->export($this->value),
+                    $this->export($otherParsed),
+                    FALSE,
+                    $message
+                ),
+                $f
             );
         }
+
+        return TRUE;
     }
 
     /**
@@ -83,7 +86,7 @@ class EqualsSQLQueriesConstraint extends IsEqual
         foreach ($queries as $query) {
             $temp[] = implode(' ', $query);
         }
-        return $this->exporter->export($temp);
+        return $this->exporter()->export($temp);
     }
 
     /**
@@ -181,5 +184,16 @@ class EqualsSQLQueriesConstraint extends IsEqual
         // $string starts with a back quote
         preg_match('/^(".*?").*$/s', $string, $matches);
         return $matches[1];
+    }
+
+    /**
+     * Returns a string representation of the constraint.
+     */
+    public function toString(): string
+    {
+        return sprintf(
+            'is equal to %s',
+            $this->exporter()->export($this->value)
+        );
     }
 }
