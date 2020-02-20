@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 use Cz\PHPUnit\SQL\Testcase;
@@ -14,7 +15,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
     /**
      * @dataProvider  provideEvaluate
      */
-    public function testEvaluate($value, $other, $returnResult, $expected)
+    public function testEvaluate($value, $other, bool $returnResult, $expected): void
     {
         $object = $this->createObject($value);
         $this->expectExceptionFromArgument($expected);
@@ -25,7 +26,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
     /**
      * Test cases using `$returnResult=FALSE`
      */
-    public function provideEvaluateDefault()
+    public function provideEvaluateDefault(): array
     {
         return [
             'Pass (whitespace differences ignored)' => [
@@ -94,7 +95,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
     /**
      * Test cases using `$returnResult=TRUE`
      */
-    public function provideEvaluateReturnResult()
+    public function provideEvaluateReturnResult(): array
     {
         return [
             'Return TRUE value' => [
@@ -110,7 +111,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
         ];
     }
 
-    public function provideEvaluate()
+    public function provideEvaluate(): array
     {
         return array_merge(
             $this->mapReturnResult($this->provideEvaluateDefault(), FALSE),
@@ -123,7 +124,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
      * @param   boolean  $returnValue
      * @return  array
      */
-    private function mapReturnResult(array $cases, $returnValue)
+    private function mapReturnResult(array $cases, $returnValue): array
     {
         return array_combine(
             array_keys($cases),

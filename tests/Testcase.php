@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 use Exception,
@@ -16,7 +17,7 @@ abstract class Testcase extends FrameworkTestCase
     /**
      * @return  ExpectationFailedException
      */
-    public function createExpectationFailedException()
+    public function createExpectationFailedException(): ExpectationFailedException
     {
         return new ExpectationFailedException('');
     }
@@ -24,7 +25,7 @@ abstract class Testcase extends FrameworkTestCase
     /**
      * @param  mixed  $expected
      */
-    public function expectExceptionFromArgument($expected)
+    public function expectExceptionFromArgument($expected): void
     {
         if ($expected instanceof Exception) {
             $this->expectException(get_class($expected));

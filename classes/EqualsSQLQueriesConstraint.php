@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 use PHPUnit\Framework\Constraint\Constraint,
@@ -41,7 +42,7 @@ class EqualsSQLQueriesConstraint extends Constraint
      * @param   boolean  $returnResult
      * @return  mixed
      */
-    public function evaluate($other, $description = '', $returnResult = FALSE)
+    public function evaluate($other, string $description = '', bool $returnResult = FALSE): ?bool
     {
         $otherParsed = $this->parseQueries($this->toArray($other));
         $comparatorFactory = ComparatorFactory::getInstance();
@@ -80,7 +81,7 @@ class EqualsSQLQueriesConstraint extends Constraint
      * @param   array  $queries
      * @return  string
      */
-    private function export($queries)
+    private function export(array $queries): string
     {
         $temp = [];
         foreach ($queries as $query) {
@@ -123,7 +124,7 @@ class EqualsSQLQueriesConstraint extends Constraint
      * @param   string  $sql
      * @return  array
      */
-    private function tokenizeSQL($sql): array
+    private function tokenizeSQL(string $sql): array
     {
         $token = '\\(|\\)|\[|\]|[\']|"|\140|<>|<=|>=|:=|[*\/<>,+=-]';
         $terminal = $token.'|;| |\\n';
@@ -162,7 +163,7 @@ class EqualsSQLQueriesConstraint extends Constraint
         return $result;
     }
 
-    private function tokSingleQuoteString($string)
+    private function tokSingleQuoteString(string $string): string
     {
         // Matches a single-quoted string in $string
         // $string starts with a single quote
@@ -170,7 +171,7 @@ class EqualsSQLQueriesConstraint extends Constraint
         return $matches[1];
     }
 
-    private function tokBackQuoteString($string)
+    private function tokBackQuoteString(string $string): string
     {
         // Matches a back-quoted string in $string
         // $string starts with a back quote
@@ -178,7 +179,7 @@ class EqualsSQLQueriesConstraint extends Constraint
         return $matches[1];
     }
 
-    private function tokDoubleQuoteString($string)
+    private function tokDoubleQuoteString(string $string): string
     {
         // Matches a back-quoted string in $string
         // $string starts with a back quote

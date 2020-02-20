@@ -15,7 +15,7 @@
         "issues": "https://github.com/czukowski/phpunit-sql/issues"
     },
     "require": {
-        "phpunit/phpunit": "~8.0"
+        "phpunit/phpunit": "~9.0"
     },
     "autoload": {
         "psr-4": {

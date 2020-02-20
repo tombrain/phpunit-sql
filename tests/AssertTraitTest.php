@@ -1,11 +1,13 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 use LogicException,
     PHPUnit\Framework\Assert,
     PHPUnit\Framework\Constraint\Constraint,
-    PHPUnit\Framework\Exception,
-    ReflectionMethod;
+    PHPUnit\Framework\MockObject\MockObject,
+    ReflectionMethod,
+    Throwable;
 
 /**
  * AssertTraitTest
@@ -18,7 +20,7 @@ class AssertTraitTest extends Testcase
     /**
      * @dataProvider  provideAssertEqualsSQLQueries
      */
-    public function testAssertEqualsSQLQueriesWithMockObject($arguments, $expected)
+    public function testAssertEqualsSQLQueriesWithMockObject(array $arguments, ?Throwable $expected): void
     {
         $this->runTestAssertEqualsSQLQueries($this->createMockObject(), $arguments, $expected);
     }
@@ -26,29 +28,21 @@ class AssertTraitTest extends Testcase
     /**
      * @dataProvider  provideAssertEqualsSQLQueries
      */
-    public function testAssertEqualsSQLQueriesWithStubObject($arguments, $expected)
+    public function testAssertEqualsSQLQueriesWithStubObject(array $arguments, ?Throwable $expected): void
     {
         $this->runTestAssertEqualsSQLQueries($this->createStubObject(), $arguments, $expected);
     }
 
-    private function runTestAssertEqualsSQLQueries($object, $arguments, $expected)
+    private function runTestAssertEqualsSQLQueries($object, array $arguments, ?Throwable $expected): void
     {
         $this->expectExceptionFromArgument($expected);
         $actual = $object->assertEqualsSQLQueries(...$arguments);
         $this->assertSame($expected, $actual);
     }
 
-    public function provideAssertEqualsSQLQueries()
+    public function provideAssertEqualsSQLQueries(): array
     {
         return [
-            [
-                [NULL, 3.14],
-                new Exception,
-            ],
-            [
-                [TRUE, FALSE],
-                new Exception,
-            ],
             [
                 ['', ''],
                 NULL,
@@ -67,7 +61,7 @@ class AssertTraitTest extends Testcase
     /**
      * @dataProvider  provideAssertExecutedSQLQueries
      */
-    public function testAssertExecutedSQLQueriesWithMockObject($arguments, $executed, $expected)
+    public function testAssertExecutedSQLQueriesWithMockObject(array $arguments, ?array $executed, ?Throwable $expected): void
     {
         $object = $this->createMockObject($this->createDbDriverMock($executed));
         $this->runTestAssertExecutedSQLQueries($object, $arguments, $expected);
@@ -76,20 +70,20 @@ class AssertTraitTest extends Testcase
     /**
      * @dataProvider  provideAssertExecutedSQLQueries
      */
-    public function testAssertExecutedSQLQueriesWithStubObject($arguments, $executed, $expected)
+    public function testAssertExecutedSQLQueriesWithStubObject(array $arguments, ?array $executed, ?Throwable $expected): void
     {
         $object = $this->createStubObject($this->createDbDriverMock($executed));
         $this->runTestAssertExecutedSQLQueries($object, $arguments, $expected);
     }
 
-    private function runTestAssertExecutedSQLQueries($object, $arguments, $expected)
+    private function runTestAssertExecutedSQLQueries($object, array $arguments, ?Throwable $expected): void
     {
         $this->expectExceptionFromArgument($expected);
         $actual = $object->assertExecutedSQLQueries(...$arguments);
         $this->assertSame($expected, $actual);
     }
 
-    public function provideAssertExecutedSQLQueries()
+    public function provideAssertExecutedSQLQueries(): array
     {
         return [
             [
@@ -155,7 +149,7 @@ class AssertTraitTest extends Testcase
     /**
      * @dataProvider  provideLoadSQLQueries
      */
-    public function testLoadSQLQueries($filename, $expected)
+    public function testLoadSQLQueries(string $filename, array $expected): void
     {
         $object = $this->createStubObject();
         $loadSQLQueries = new ReflectionMethod($object, 'loadSQLQueries');
@@ -164,7 +158,7 @@ class AssertTraitTest extends Testcase
         $this->assertEquals($expected, $actual);
     }
 
-    public function provideLoadSQLQueries()
+    public function provideLoadSQLQueries(): array
     {
         return [
             [
@@ -174,7 +168,7 @@ class AssertTraitTest extends Testcase
         ];
     }
 
-    private function createDbDriverMock($executed)
+    private function createDbDriverMock($executed): ?DatabaseDriverInterface
     {
         // `$executed=NULL` is a special case for when a database driver is not set/implemented.
         if ($executed !== NULL) {
@@ -184,9 +178,10 @@ class AssertTraitTest extends Testcase
                 ->willReturn($executed);
             return $db;
         }
+        return NULL;
     }
 
-    private function createMockObject($dbDriverMock = NULL)
+    private function createMockObject(?DatabaseDriverInterface $dbDriverMock = NULL): MockObject
     {
         $methods = $dbDriverMock === NULL ? [] : ['getDatabaseDriver'];
         $object = $this->getMockForTrait(AssertTrait::class, [], '', TRUE, TRUE, TRUE, $methods);
@@ -203,7 +198,7 @@ class AssertTraitTest extends Testcase
         return $object;
     }
 
-    private function createStubObject($dbDriverMock = NULL)
+    private function createStubObject(?DatabaseDriverInterface $dbDriverMock = NULL): AssertTraitObjectExtendsAssert
     {
         return new AssertTraitObjectExtendsAssert($dbDriverMock);
     }

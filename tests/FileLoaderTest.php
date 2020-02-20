@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 /**
@@ -12,7 +13,7 @@ class FileLoaderTest extends Testcase
     /**
      * @dataProvider  provideLoadSQLFile
      */
-    public function testLoadSQLFile($filename, $expected)
+    public function testLoadSQLFile(string $filename, array $expected): void
     {
         $object = new FileLoader;
         $path = $object->getFilePathFromObjectSubdirectory($this, $filename);
@@ -20,7 +21,7 @@ class FileLoaderTest extends Testcase
         $this->assertEquals($expected, $actual);
     }
 
-    public function provideLoadSQLFile()
+    public function provideLoadSQLFile(): array
     {
         return [
             'Query not starting with new line, no split!' => [

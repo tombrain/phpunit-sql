@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Cz\PHPUnit\SQL;
 
 /**
@@ -19,7 +20,7 @@ trait DatabaseDriverTrait
     /**
      * @param  string  $sql
      */
-    public function addExecutedQuery($sql)
+    public function addExecutedQuery($sql): void
     {
         $this->executedQueries[] = $sql;
     }
