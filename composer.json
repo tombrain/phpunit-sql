@@ -1,5 +1,5 @@
 {
-    "name": "czukowski/phpunit-sql",
+    "name": "tombrain/phpunit-sql",
     "type": "library",
     "description": "SQL strings testing helpers for PHPUnit",
     "keywords": ["phpunit", "sql"],
@@ -15,7 +15,7 @@
         "issues": "https://github.com/czukowski/phpunit-sql/issues"
     },
     "require": {
-        "phpunit/phpunit": "~9.0"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "psr-4": {
