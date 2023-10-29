@@ -11,9 +11,6 @@
             "homepage": "http://xn----0tbl7bn.com"
         }
     ],
-    "support": {
-        "issues": "https://github.com/czukowski/phpunit-sql/issues"
-    },
     "require": {
         "phpunit/phpunit": "^10.0"
     },
