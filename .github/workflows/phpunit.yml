@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [7.3, 7.4, 8.0, 8.1, 8.2]
-        
+        phpunit: ['default', '~9.6.13']
 
     steps:
     - name: Checkout code
@@ -21,6 +21,10 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
+
+    - name: Use specific PHPUnit version
+      if: ${{ matrix.phpunit != 'default' }}
+      run: composer require --dev --no-update phpunit/phpunit:${{ matrix.phpunit }}
 
     - name: Validate composer.json
       run: composer validate
