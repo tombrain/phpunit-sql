@@ -26,7 +26,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
     /**
      * Test cases using `$returnResult=FALSE`
      */
-    public function provideEvaluateDefault(): array
+    public static function provideEvaluateDefault(): array
     {
         return [
             'Pass (whitespace differences ignored)' => [
@@ -42,12 +42,12 @@ class EqualsSQLQueriesConstraintTest extends Testcase
             'Fail (quote identifier)' => [
                 "SELECT * FROM `t1`",
                 "SELECT * FROM t1",
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Fail (operator)' => [
                 "SELECT * FROM `t1` WHERE `d` > NOW()",
                 "SELECT * FROM `t1` WHERE `d` < NOW()",
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Pass, multiple queries' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
@@ -57,27 +57,27 @@ class EqualsSQLQueriesConstraintTest extends Testcase
             'Fail, multiple queries' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
                 ["DELETE * FROM `t1`", "SELECT * FROM `t2`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Fail, two queries in one string' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
                 ["SELECT * FROM `t1`; SELECT * FROM `t2`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Fail, reverse order' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
                 ["SELECT * FROM `t2`", "SELECT * FROM `t1`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Fail, one missing' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`", "SELECT * FROM `t3`"],
                 ["SELECT * FROM `t1`", "SELECT * FROM `t3`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Fail, one extra' => [
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`"],
                 ["SELECT * FROM `t1`", "SELECT * FROM `t2`", "SELECT * FROM `t3`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             'Pass, mixed types (array, string)' => [
                 ["SELECT * FROM `t1`"],
@@ -95,7 +95,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
     /**
      * Test cases using `$returnResult=TRUE`
      */
-    public function provideEvaluateReturnResult(): array
+    public static function provideEvaluateReturnResult(): array
     {
         return [
             'Return TRUE value' => [
@@ -111,11 +111,11 @@ class EqualsSQLQueriesConstraintTest extends Testcase
         ];
     }
 
-    public function provideEvaluate(): array
+    public static function provideEvaluate(): array
     {
         return array_merge(
-            $this->mapReturnResult($this->provideEvaluateDefault(), FALSE),
-            $this->mapReturnResult($this->provideEvaluateReturnResult(), TRUE)
+            static::mapReturnResult(static::provideEvaluateDefault(), FALSE),
+            static::mapReturnResult(static::provideEvaluateReturnResult(), TRUE)
         );
     }
 
@@ -124,7 +124,7 @@ class EqualsSQLQueriesConstraintTest extends Testcase
      * @param   boolean  $returnValue
      * @return  array
      */
-    private function mapReturnResult(array $cases, $returnValue): array
+    private static function mapReturnResult(array $cases, $returnValue): array
     {
         return array_combine(
             array_keys($cases),

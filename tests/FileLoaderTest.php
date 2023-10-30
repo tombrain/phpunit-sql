@@ -21,7 +21,7 @@ class FileLoaderTest extends Testcase
         $this->assertEquals($expected, $actual);
     }
 
-    public function provideLoadSQLFile(): array
+    public static function provideLoadSQLFile(): array
     {
         return [
             'Query not starting with new line, no split!' => [

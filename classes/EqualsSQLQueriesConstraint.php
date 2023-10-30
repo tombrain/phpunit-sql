@@ -67,7 +67,7 @@ class EqualsSQLQueriesConstraint extends Constraint
                     $otherParsed,
                     $this->export($this->value),
                     $this->export($otherParsed),
-                    FALSE,
+                    "FALSE",
                     $message
                 ),
                 $f

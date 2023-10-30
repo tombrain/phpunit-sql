@@ -40,7 +40,7 @@ class AssertTraitTest extends Testcase
         $this->assertSame($expected, $actual);
     }
 
-    public function provideAssertEqualsSQLQueries(): array
+    public static function provideAssertEqualsSQLQueries(): array
     {
         return [
             [
@@ -53,7 +53,7 @@ class AssertTraitTest extends Testcase
             ],
             [
                 ["SELECT * FROM `t1`", "DELETE * FROM `t1`"],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
         ];
     }
@@ -83,7 +83,7 @@ class AssertTraitTest extends Testcase
         $this->assertSame($expected, $actual);
     }
 
-    public function provideAssertExecutedSQLQueries(): array
+    public static function provideAssertExecutedSQLQueries(): array
     {
         return [
             [
@@ -115,14 +115,14 @@ class AssertTraitTest extends Testcase
                     ['SELECT * FROM `t1`'],
                 ],
                 [],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             [
                 [
                     ['SELECT * FROM `t1`', 'SELECT * FROM `t2`'],
                 ],
                 ['SELECT * FROM `t1`', 'DELETE * FROM `t2`'],
-                $this->createExpectationFailedException(),
+                static::createExpectationFailedException(),
             ],
             [
                 [
@@ -158,7 +158,7 @@ class AssertTraitTest extends Testcase
         $this->assertEquals($expected, $actual);
     }
 
-    public function provideLoadSQLQueries(): array
+    public static function provideLoadSQLQueries(): array
     {
         return [
             [

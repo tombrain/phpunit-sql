@@ -17,7 +17,7 @@ abstract class Testcase extends FrameworkTestCase
     /**
      * @return  ExpectationFailedException
      */
-    public function createExpectationFailedException(): ExpectationFailedException
+    public static function createExpectationFailedException(): ExpectationFailedException
     {
         return new ExpectationFailedException('');
     }
