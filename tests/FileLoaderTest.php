@@ -65,7 +65,7 @@ class FileLoaderTest extends Testcase
             'Multiline query' => [
                 'Test7.sql',
                 [
-                    implode("\r\n", [
+                    implode(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? "\r\n" : "\n", [
                         "SELECT *",
                         "FROM `t1`",
                         "JOIN `t2` ON `t1`.`a` = `t2`.`b`",
