@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [8.1, 8.2, 8.3, 8.4]
-        phpunit: ['10.0.0', '~10', 'default']
+        phpunit: ['10.0.0', '~10', 'default', '~11', '~12']
         include:
           - php: 7.3
             phpunit: '~9.6.13'
