@@ -185,11 +185,6 @@ class AssertTraitTest extends Testcase
     {
         $methods = $dbDriverMock === NULL ? [] : ['getDatabaseDriver'];
         $object = $this->getMockForTrait(AssertTrait::class, [], '', TRUE, TRUE, TRUE, $methods);
-        $object->expects($this->any())
-            ->method('assertThat')
-            ->willReturnCallback(function ($value, Constraint $constraint, $message = '') {
-                return Assert::assertThat($value, $constraint, $message);
-            });
         if ($dbDriverMock !== NULL) {
             $object->expects($this->any())
                 ->method('getDatabaseDriver')

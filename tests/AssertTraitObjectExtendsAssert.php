@@ -30,9 +30,4 @@ class AssertTraitObjectExtendsAssert
         }
         return $this->dbDriverMock;
     }
-    
-    public function assertThat($value, Constraint $constraint, string $message = ''): void
-    {
-        Assert::assertThat($value, $constraint, $message);
-    }
 }

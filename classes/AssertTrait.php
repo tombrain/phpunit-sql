@@ -4,6 +4,7 @@ namespace Cz\PHPUnit\SQL;
 
 use LogicException,
     PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Framework\Assert;
 
 /**
  * AssertTrait
@@ -48,7 +49,7 @@ trait AssertTrait
         $expectedArray = $flatten([$expected]);
         $actualArray = $flatten([$actual]);
         $constraint = new EqualsSQLQueriesConstraint($expectedArray, $delta, $maxDepth, $canonicalize, $ignoreCase);
-        $this->assertThat($actualArray, $constraint, $message);
+        Assert::assertThat($actualArray, $constraint, $message);
     }
 
     /**
@@ -103,11 +104,4 @@ trait AssertTrait
     {
         return FileLoader::getFilePathFromObjectSubdirectory($this, $filename);
     }
-
-    /**
-     * @param  mixed       $value
-     * @param  Constraint  $constraint
-     * @param  string      $message
-     */
-    abstract public function assertThat($value, Constraint $constraint, string $message = ''): void;
 }
